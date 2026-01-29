@@ -46,8 +46,8 @@ controls.enableDamping = true
 /***********
 ** MESHES **
 ************/
-// test sphere
-const sphereGeometry = new THREE.SphereGeometry(1)
+// testSphere
+const sphereGeometry = new THREE.TorusKnotGeometry(1)
 const sphereMaterial = new THREE.MeshNormalMaterial()
 const testSphere = new THREE.Mesh(sphereGeometry, sphereMaterial)
 
@@ -74,7 +74,8 @@ const ui = new dat.GUI()
 // UI Object
 const uiObject = {
     speed: 1,
-    distance: 1
+    distance: 1,
+    rotation: 0.1
 }
 
 // plane UI
@@ -101,6 +102,13 @@ sphereFolder
     .step(0.1)
     .name('Distance')
 
+sphereFolder
+    .add(uiObject,'rotation')
+    .min(0.1)
+    .max(10)
+    .step(0.1)
+    .name('Rotation')
+
 /******************* 
 ** ANIMATION LOOP **
 ********************/
@@ -113,6 +121,7 @@ const animation = () =>
 
     // Animate Sphere
     testSphere.position.y = Math.sin(elapsedTime * uiObject.speed) * uiObject.distance
+    testSphere.rotation.x = Math.sin(elapsedTime * uiObject.speed) * uiObject.rotation * uiObject.distance
 
     // Update OrbitControls
     controls.update()
