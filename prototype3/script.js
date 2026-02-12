@@ -61,12 +61,27 @@ cave.receiveShadow = true
 scene.add(cave)
 
 // Objects
-const torusKnotGeometry = new THREE.TorusKnotGeometry(1, 0.2)
+const torusKnotGeometry = new THREE.SphereGeometry(0.4)
 const torusKnotMaterial = new THREE.MeshNormalMaterial()
 const torusKnot = new THREE.Mesh(torusKnotGeometry, torusKnotMaterial)
-torusKnot.position.set(6, 1, 0)
+torusKnot.position.set(4, 2, 1)
 torusKnot.castShadow = true
 scene.add(torusKnot)
+
+const sphere2Geometry = new THREE.SphereGeometry(0.4)
+const sphere2Material = new THREE.MeshNormalMaterial()
+const sphere2 = new THREE.Mesh(sphere2Geometry, sphere2Material)
+sphere2.position.set(4, 2, -1)
+sphere2.castShadow = true
+scene.add(sphere2)
+
+const smileGeometry = new THREE.TorusGeometry(1.5, 0.2, 6, 24, Math.PI / -1)
+const smileMaterial = new THREE.MeshNormalMaterial()
+const smile = new THREE.Mesh(smileGeometry, smileMaterial)
+smile.position.set(4, 0.5, 0)
+smile.rotation.y = 1.5
+smile.castShadow = true
+scene.add(smile)
 
 /************
  ** LIGHTS **
