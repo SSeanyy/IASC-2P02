@@ -62,12 +62,27 @@ cave.receiveShadow = true
 scene.add(cave)
 
 // Objects
-const torusKnotGeometry = new THREE.TorusKnotGeometry(1, 0.2)
-const torusKnotMaterial = new THREE.MeshNormalMaterial()
-const torusKnot = new THREE.Mesh(torusKnotGeometry, torusKnotMaterial)
-torusKnot.position.set(15, 2.5, 0)
-torusKnot.castShadow = true
-scene.add(torusKnot)
+const capsuleGeometry = new THREE.CapsuleGeometry(1,2)
+const capsuleMaterial = new THREE.MeshNormalMaterial()
+const capsule = new THREE.Mesh(capsuleGeometry, capsuleMaterial)
+capsule.position.set(15, 1.5, 0)
+capsule.castShadow = true
+scene.add(capsule)
+
+const sphereGeometry = new THREE.SphereGeometry()
+const sphereMaterial = new THREE.MeshNormalMaterial()
+const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial)
+sphere.position.set(15, 4.3, 0)
+sphere.castShadow = true
+scene.add(sphere)
+
+const sunGeometry = new THREE.SphereGeometry(1.5)
+const sunMaterial = new THREE.MeshNormalMaterial()
+const sun = new THREE.Mesh(sunGeometry, sunMaterial)
+sun.position.set(17, 7, -3)
+sun.castShadow = true
+scene.add(sun)
+
 
 /************
  ** LIGHTS **
@@ -188,25 +203,27 @@ const animation = () =>
     // first-change
     if(domObject.firstChange)
     {
-        torusKnot.rotation.x = elapsedTime
+        capsule.position.z = Math.sin(elapsedTime)
+        sphere.position.z = Math.sin(elapsedTime)
     }
 
     // second-change
     if(domObject.secondChange)
     {
-        torusKnot.rotation.y = elapsedTime
+        capsule.position.x = (Math.sin(elapsedTime) + 15) * 1
+        sphere.position.x = (Math.sin(elapsedTime) + 15) * 1
     }
 
     // third-change
     if(domObject.thirdChange)
     {
-        torusKnot.position.y = (Math.sin(elapsedTime) + 1) * 2
+        sun.position.y = (-Math.sin(elapsedTime) + 2) * 2
     }
 
     // fourth-change
     if(domObject.fourthChange)
     {
-        torusKnot.position.z = Math.sin(elapsedTime)
+        sun.position.y = (Math.sin(elapsedTime) + 0.2) * 2
     }
 
     // Update directionalLightHelper
