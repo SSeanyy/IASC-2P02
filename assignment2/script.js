@@ -41,13 +41,13 @@ scene.background = new THREE.Color('gray')
 
 // Camera
 const camera =  new THREE.PerspectiveCamera(
-    100,
+    75,
     sizes.aspectRatio,
     0.1,
     100
 )
 scene.add(camera)
-camera.position.set(5, 25, -20)
+camera.position.set(0, 12, -20)
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
@@ -67,6 +67,10 @@ controls.enableDamping = true
 const directionalLight = new THREE.DirectionalLight(0x404040, 100)
 scene.add(directionalLight)
 
+// Ambient Light
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
+scene.add(ambientLight)
+
 /***********
 ** MESHES **
 ************/
@@ -76,9 +80,23 @@ const cubeGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5)
 const drawCube = (height, params) =>
 {
     // Create cube material
-    const material = new THREE.MeshStandardMaterial({
-        color: new THREE.Color(params.color)
-    })
+    let material 
+    if(params.emissive)
+    {
+            material = new THREE.MeshLambertMaterial({
+            emissive: new THREE.Color(params.color)
+        })
+    } else {
+            material = new THREE.MeshStandardMaterial({
+            color: new THREE.Color(params.color)
+        })
+    }
+
+    // Wireframe
+    if(params.wireframe)
+    {
+        material.wireframe = true
+    }
 
     // Create cube
     const cube = new THREE.Mesh(cubeGeometry, material)
@@ -86,12 +104,20 @@ const drawCube = (height, params) =>
     // Position cube
     cube.position.x = (Math.random() - 0.5) * params.diameter
     cube.position.z = (Math.random() - 0.5) * params.diameter
-    cube.position.y = height
+    cube.position.y = height - 10
 
     // Scale cube
     cube.scale.x = params.scale
     cube.scale.y = params.scale
     cube.scale.z = params.scale
+
+    // Dynamic Scale
+    if(params.dynamicScale)
+    {
+        cube.scale.x = height * params.scale
+        cube.scale.y = height * params.scale 
+        cube.scale.z = height * params.scale
+    }
 
     // Randomize cube rotation
     if(params.randomized){
@@ -127,36 +153,45 @@ const group3 = new THREE.Group()
 scene.add(group3)
 
 const uiObj = {
-    sourceText: "The quick brown fox jumped over the lazy dog.",
+    sourceText: "",
     saveSourceText() {
         saveSourceText()
     },
     term1: {
-        term: 'fox',
-        color: '#aa00ff',
-        diameter: 10,
+        term: 'reyes',
+        color: '#ff0000',
+        diameter: 15,
+        dynamicScale: true,
+        emissive: true,
         group: group1,
         nCubes: 100,
         randomized: true,
-        scale: 1
+        scale: 0.1,
+        wireframe: true
     },
     term2: {
-        term: 'dog',
-        color: '#00ffaa',
+        term: 'money',
+        color: '#00ff6e',
         diameter: 10,
+        dynamicScale: false,
+        emissive: false,
         group: group2,
         nCubes: 100,
         randomized: true,
-        scale: 1
+        scale: 1,
+        wireframe: false
     },
     term3: {
-        term: '',
-        color: '',
+        term: 'car',
+        color: '#ffa200',
         diameter: 10,
+        dynamicScale: false,
+        emissive: false,
         group: group3,
         nCubes: 100,
         randomized: true,
-        scale: 1
+        scale: 1,
+        wireframe: false
     },
     saveTerms() {
         saveTerms()
@@ -321,6 +356,12 @@ const animation = () =>
         camera.position.y = 20
         camera.lookAt(0, 0, 0)
     }
+
+    // Group 1 Animations
+    group1.rotation.y = elapsedTime * 0.3
+
+    // Rotate Group 3
+    group3.rotation.x = elapsedTime
 
     // Renderer
     renderer.render(scene, camera)
