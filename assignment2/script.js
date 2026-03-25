@@ -165,9 +165,9 @@ const uiObj = {
         dynamicScale: false,
         emissive: false,
         group: group1,
-        nCubes: 100,
+        nCubes: 50,
         randomized: true,
-        scale: 0.1,
+        scale: 0.2,
         wireframe: false
     },
     term2: {
@@ -187,7 +187,7 @@ const uiObj = {
         color: '#ffa200',
         diameter: 8,
         dynamicScale: false,
-        emissive: true,
+        emissive: false,
         group: group3,
         nCubes: 5,
         randomized: true,
@@ -362,12 +362,13 @@ const animation = () =>
     group1.rotation.x = elapsedTime * 0.1
     group1.rotation.y = elapsedTime * 0.1
     group1.rotation.z = elapsedTime * 0.1
-    group1.scale.x = elapsedTime * 0.1
-    group1.scale.y = elapsedTime * 0.1
-    group1.scale.z = elapsedTime * 0.1
+    group1.scale.x = Math.sin(elapsedTime * 0.15) * 1 + 1
+    group1.scale.y = Math.sin(elapsedTime * 0.15) * 1 + 1
+    group1.scale.z = Math.sin(elapsedTime * 0.15) * 1 + 1
 
     // Group 2 Animations
     group2.rotation.y = elapsedTime * 0.5
+    group2.position.x = Math.sin(elapsedTime) * 1 + 1
 
     // Rotate Group 3
     group3.rotation.x = elapsedTime * 0.7
