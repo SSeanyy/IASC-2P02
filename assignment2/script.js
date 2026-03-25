@@ -75,7 +75,7 @@ scene.add(ambientLight)
 ** MESHES **
 ************/
 // Cube Geometry
-const cubeGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5)
+const cubeGeometry = new THREE.OctahedronGeometry()
 
 const drawCube = (height, params) =>
 {
@@ -84,7 +84,8 @@ const drawCube = (height, params) =>
     if(params.emissive)
     {
             material = new THREE.MeshLambertMaterial({
-            emissive: new THREE.Color(params.color)
+            emissive: new THREE.Color(params.color),
+            emissiveIntensity: height * 0.05
         })
     } else {
             material = new THREE.MeshStandardMaterial({
@@ -160,35 +161,35 @@ const uiObj = {
     term1: {
         term: 'reyes',
         color: '#ff0000',
-        diameter: 15,
-        dynamicScale: true,
-        emissive: true,
+        diameter: 10,
+        dynamicScale: false,
+        emissive: false,
         group: group1,
         nCubes: 100,
         randomized: true,
         scale: 0.1,
-        wireframe: true
+        wireframe: false
     },
     term2: {
         term: 'money',
         color: '#00ff6e',
         diameter: 10,
-        dynamicScale: false,
+        dynamicScale: true,
         emissive: false,
         group: group2,
-        nCubes: 100,
+        nCubes: 3,
         randomized: true,
-        scale: 1,
+        scale: 0.1,
         wireframe: false
     },
     term3: {
         term: 'car',
         color: '#ffa200',
-        diameter: 10,
+        diameter: 8,
         dynamicScale: false,
-        emissive: false,
+        emissive: true,
         group: group3,
-        nCubes: 100,
+        nCubes: 5,
         randomized: true,
         scale: 1,
         wireframe: false
@@ -358,10 +359,20 @@ const animation = () =>
     }
 
     // Group 1 Animations
-    group1.rotation.y = elapsedTime * 0.3
+    group1.rotation.x = elapsedTime * 0.1
+    group1.rotation.y = elapsedTime * 0.1
+    group1.rotation.z = elapsedTime * 0.1
+    group1.scale.x = elapsedTime * 0.1
+    group1.scale.y = elapsedTime * 0.1
+    group1.scale.z = elapsedTime * 0.1
+
+    // Group 2 Animations
+    group2.rotation.y = elapsedTime * 0.5
 
     // Rotate Group 3
-    group3.rotation.x = elapsedTime
+    group3.rotation.x = elapsedTime * 0.7
+    group3.rotation.y = elapsedTime * 0.7
+    group3.rotation.z = elapsedTime * 0.7
 
     // Renderer
     renderer.render(scene, camera)
