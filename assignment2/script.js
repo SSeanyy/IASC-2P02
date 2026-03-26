@@ -161,11 +161,11 @@ const uiObj = {
     term1: {
         term: 'reyes',
         color: '#ff0000',
-        diameter: 10,
+        diameter: 15,
         dynamicScale: false,
         emissive: false,
         group: group1,
-        nCubes: 50,
+        nCubes: 80,
         randomized: true,
         scale: 0.2,
         wireframe: false
@@ -362,18 +362,21 @@ const animation = () =>
     group1.rotation.x = elapsedTime * 0.1
     group1.rotation.y = elapsedTime * 0.1
     group1.rotation.z = elapsedTime * 0.1
-    group1.scale.x = Math.sin(elapsedTime * 0.15) * 1 + 1
-    group1.scale.y = Math.sin(elapsedTime * 0.15) * 1 + 1
-    group1.scale.z = Math.sin(elapsedTime * 0.15) * 1 + 1
+    group1.scale.x = Math.cos(elapsedTime * 0.15) * 1 - 1
+    group1.scale.y = Math.cos(elapsedTime * 0.15) * 1 - 1
+    group1.scale.z = Math.cos(elapsedTime * 0.15) * 1 - 1
 
     // Group 2 Animations
     group2.rotation.y = elapsedTime * 0.5
     group2.position.x = Math.sin(elapsedTime) * 1 + 1
+    group2.scale.x = Math.cos(elapsedTime * 0.15) * 2 - 1
+    group2.scale.y = Math.cos(elapsedTime * 0.15) * 2 - 1
+    group2.scale.z = Math.cos(elapsedTime * 0.15) * 2 - 1
 
     // Rotate Group 3
-    group3.rotation.x = elapsedTime * 0.7
-    group3.rotation.y = elapsedTime * 0.7
-    group3.rotation.z = elapsedTime * 0.7
+    group3.rotation.x = elapsedTime * 0.5
+    group3.rotation.y = elapsedTime * 0.5
+    group3.rotation.z = elapsedTime * 0.5
 
     // Renderer
     renderer.render(scene, camera)
